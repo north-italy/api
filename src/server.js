@@ -16,7 +16,7 @@ export default async function handler(req, res) {
          { id: 3, name: 'Charlie Brown', email: 'charlie@example.com' }],
         { status: 200, statusText: "OK" });
     default:
-      res.json(
+      return res.json(
         { message: 'Endpoint not found' },
         { status: 404, statusText: "Not Found" });
   }
