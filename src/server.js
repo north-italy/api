@@ -5,21 +5,16 @@ export default async function handler(req, res) {
   switch (req.url) {
     case '':
     case '/':
-      return res.json(
+      return res.status(200).json(
         { message: "Welcome to Alpey Api!" },
-        { status: 200, statusText: "OK" });
+        { statusText: "OK" });
     case '/users':
-      return res.json(
+      return res.status(200).json(
         [{ id: 1, name: 'Alice Smith', email: 'alice@example.com' },
          { id: 2, name: 'Bob Johnson', email: 'bob@example.com' },
          { id: 3, name: 'Charlie Brown', email: 'charlie@example.com' }],
-        { status: 200, statusText: "OK" });
+        { statusText: "OK" });
     default:
-      return new Response(
-        JSON.stringify({ message: 'Endpoint not found' }),
-        { status: 404, statusText: "Not Found" });/*
-      return res.status(404).json(
-        { message: 'Endpoint not found' },
-        { statusText: "Not Found" });*/
+      return res.status(404).json({ message: 'Endpoint not found' });
   }
 }
