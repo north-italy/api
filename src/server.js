@@ -1,7 +1,6 @@
 export default async function handler(req, res) {
-  const { url, method } = req;
-  
-  res.setHeader('Content-Type', 'application/json');
+  //const { url, method } = req;
+  //res.setHeader('Content-Type', 'application/json');
   
   switch (req.url) {
     case '':
