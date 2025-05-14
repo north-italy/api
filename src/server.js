@@ -15,8 +15,11 @@ export default async function handler(req, res) {
          { id: 3, name: 'Charlie Brown', email: 'charlie@example.com' }],
         { status: 200, statusText: "OK" });
     default:
+      return new Response(
+        JSON.stringify({ message: 'Endpoint not found' }),
+        { status: 404, statusText: "Not Found" });/*
       return res.status(404).json(
         { message: 'Endpoint not found' },
-        { statusText: "Not Found" });
+        { statusText: "Not Found" });*/
   }
 }
