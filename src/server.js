@@ -1,40 +1,48 @@
 export default async function handler(req, res) {
-  const { url, method } = req;
+  const { url, method, requestBody } = req;
   res.setHeader('Content-Type', 'application/json');
   
   switch (url) {
     case '':
     case '/':
-      return res.status(200).json(
+      res.status(200).json(
         { message: "Welcome to Alpey Api!" },
         { statusText: "OK" });
+      return;
     case '/users':
-      return res.status(200).json(
+      res.status(200).json(
         [{ id: 1, name: 'Alice Smith', email: 'alice@example.com' },
          { id: 2, name: 'Bob Johnson', email: 'bob@example.com' },
          { id: 3, name: 'Charlie Brown', email: 'charlie@example.com' }],
         { statusText: "OK" });
+      return;
     case '/post':
       if (method !== 'POST') {
-        return res.status(400).json({
+        res.status(400).json({
           message: 'Bad Request',
           is: `Method is ${method}`,
           expected: 'Method to be "POST"'
         });
+        return;
       } else {
-        const requestBody = req.body;
         // Überprüfe, ob ein Body gesendet wurde und ob er geparst wurde
         if (!requestBody) {
-          return res.status(400).json({ message: 'Kein Request Body gefunden' });
-          //return; // Wichtig: Beende die Funktion nach dem Senden der Antwort
+          res.status(400).json({ message: 'Kein Request Body gefunden' });
+          return; // Wichtig: Beende die Funktion nach dem Senden der Antwort
         }
         
         let reqBody = {some: null};
         try {
+          reqBody await req.json();
+        } catch(err) {
+          res.status(400).json({ message: 'Failed to parse body' });
+          return; // Wichtig: Beende die Funktion nach dem Senden der Antwort
+        }
+        try {
           let message = 'Body is good';
           //let reqBody = await req.json();
           //reqBody = req.body.json();
-          reqBody = JSON.parse(req.body);
+          //reqBody = JSON.parse(req.body);
           
           const requiredParams = new Map([
             ['token', 'string'],
