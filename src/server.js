@@ -26,7 +26,8 @@ export default async function handler(req, res) {
         try {
           let message = 'Body is good';
           //let reqBody = await req.json();
-          reqBody = req.body.json();
+          //reqBody = req.body.json();
+          reqBody = JSON.parse(req.body);
           
           const requiredParams = new Map([
             ['token', 'string'],
