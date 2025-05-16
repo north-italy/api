@@ -24,7 +24,7 @@ export default async function handler(req, res) {
       } else {
         try {
           let message = 'Body is good';
-          const reqBody = {};
+          let reqBody = {};
           await req.json()
           .then(body => reqBody = body);
 
