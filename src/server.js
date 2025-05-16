@@ -46,10 +46,10 @@ export default async function handler(req, res) {
               break;
             }
           }
-        } catch (err) {
+        } catch (error) {
             return res.status(406).json({
             message: 'Not Acceptable',
-            error: err
+            error
           });
         }
         return res.status(202).json({ message }, { statusText: "OK" });
