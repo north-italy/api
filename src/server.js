@@ -22,8 +22,38 @@ export default async function handler(req, res) {
           expected: 'Method to be "POST"'
         });
       } else {
-        return res.status(202).json({ message: 'Endpoint for making POST-Calls' }, { statusText: "OK" });
-      }
+        try {
+          let message = 'Body is good';
+          const reqBody = {};
+          await req.json()
+          .then(body => reqBody = body);
+
+          const requiredParams = new Map([
+            ['token', 'string'],
+            ['value', 'number']
+          ]);
+
+          let typ;
+          for (let k in reqBody) {
+            typ = requiredParams.get(k);
+            if (typ) {
+              if (typeof reqBody[k] !== typ) {
+                message = `Parameter '${k}' in body expected to be of type '${typ}' but is: '${typeof reqBody[k]}'`;
+                break;
+              }
+            } else {
+              message = `Parameter '${k}' not allowed`;
+              break;
+            }
+          }
+        } catch (err) {
+            return res.status(406).json({
+            message: 'Not Acceptable',
+            error: err
+          });
+        }
+        return res.status(202).json({ message }, { statusText: "OK" });
+      } 
     default:
       return res.status(404).json({ message: 'Endpoint not found' });
   }
