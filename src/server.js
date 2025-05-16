@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         
         let reqBody = {some: null};
         try {
-          reqBody = await req.json();
+          reqBody = await requestBody.json();
         } catch(err) {
           res.status(400).json({ message: 'Failed to parse body' });
           return; // Wichtig: Beende die Funktion nach dem Senden der Antwort
