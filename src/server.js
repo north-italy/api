@@ -22,10 +22,11 @@ export default async function handler(req, res) {
           expected: 'Method to be "POST"'
         });
       } else {
+        let reqBody = {some: null};
         try {
           let message = 'Body is good';
           //let reqBody = await req.json();
-          const reqBody = await new Response(req.body).json();
+          reqBody = await new Response(req.body).json();
           
           const requiredParams = new Map([
             ['token', 'string'],
@@ -48,7 +49,8 @@ export default async function handler(req, res) {
         } catch (err) {
             return res.status(406).json({
             message: 'Not Acceptable',
-            error: err.message
+            error: err.message,
+              reqBody
           });
         }
         return res.status(202).json({ message }, { statusText: "OK" });
