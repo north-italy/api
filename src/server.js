@@ -1,3 +1,28 @@
+async function streamToJson(stream) {
+  let chunks = [];
+
+  // Lies Daten-Chunks aus dem Stream
+  for await (const chunk of stream) {
+    chunks.push(chunk);
+  }
+
+  // Verbinde die Chunks zu einem einzigen Buffer
+  const bodyBuffer = Buffer.concat(chunks);
+
+  // Konvertiere den Buffer in einen String (meist UTF-8)
+  const bodyString = bodyBuffer.toString('utf-8');
+
+  // Parse den String als JSON
+  try {
+    const jsonBody = JSON.parse(bodyString);
+    return jsonBody;
+  } catch (error) {
+    // Behandle Fehler beim Parsen (z.B. ungültiges JSON)
+    console.error('Fehler beim Parsen des JSON-Streams:', error);
+    throw new Error('Ungültiges JSON erhalten'); // Wirf den Fehler erneut
+  }
+}
+
 export default async function handler(req, res) {
   const { url, method } = req;
   res.setHeader('Content-Type', 'application/json');
@@ -34,7 +59,8 @@ export default async function handler(req, res) {
         
         let reqBody = {some: null};
         try {
-          reqBody = await requestBody.json();
+          //reqBody = await requestBody.json();
+          reqBody = await streamToJson(red);
         } catch(err) {
           res.status(400).json({ message: 'Failed to parse body' });
           return; // Wichtig: Beende die Funktion nach dem Senden der Antwort
