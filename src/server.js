@@ -22,6 +22,13 @@ export default async function handler(req, res) {
           expected: 'Method to be "POST"'
         });
       } else {
+        const requestBody = req.body;
+        // Überprüfe, ob ein Body gesendet wurde und ob er geparst wurde
+        if (!requestBody) {
+          return res.status(400).json({ message: 'Kein Request Body gefunden' });
+          //return; // Wichtig: Beende die Funktion nach dem Senden der Antwort
+        }
+        
         let reqBody = {some: null};
         try {
           let message = 'Body is good';
