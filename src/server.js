@@ -14,6 +14,12 @@ export default async function handler(req, res) {
          { id: 2, name: 'Bob Johnson', email: 'bob@example.com' },
          { id: 3, name: 'Charlie Brown', email: 'charlie@example.com' }],
         { statusText: "OK" });
+    case '/post':
+      if (req.method !== 'POST') {
+        return res.status(400).json({ message: 'Bad Request', { expected: 'Method must be "POST"' }, is: req.method });
+      } else {
+        return res.status(202).json({ message: 'Endpoint for making POST-Calls' }, { statusText: "OK" });
+      }
     default:
       return res.status(404).json({ message: 'Endpoint not found' });
   }
