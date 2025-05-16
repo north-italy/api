@@ -1,8 +1,8 @@
 export default async function handler(req, res) {
-  //const { url, method } = req;
-  //res.setHeader('Content-Type', 'application/json');
+  const { url, method } = req;
+  res.setHeader('Content-Type', 'application/json');
   
-  switch (req.url) {
+  switch (url) {
     case '':
     case '/':
       return res.status(200).json(
@@ -15,8 +15,12 @@ export default async function handler(req, res) {
          { id: 3, name: 'Charlie Brown', email: 'charlie@example.com' }],
         { statusText: "OK" });
     case '/post':
-      if (req.method !== 'POST') {
-        return res.status(400).json({ message: 'Bad Request', { expected: 'Method must be "POST"' }, is: req.method });
+      if (method !== 'POST') {
+        return res.status(400).json({
+          message: 'Bad Request',
+          is: `Method is ${method}`,
+          expected: 'Method to be "POST"'
+        });
       } else {
         return res.status(202).json({ message: 'Endpoint for making POST-Calls' }, { statusText: "OK" });
       }
