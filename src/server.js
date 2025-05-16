@@ -50,8 +50,7 @@ export default async function handler(req, res) {
             return res.status(406).json({
             message: 'Not Acceptable',
             error: err.message,
-              reqBody,
-              body:req
+              reqBody
           });
         }
         return res.status(202).json({ message }, { statusText: "OK" });
