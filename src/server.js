@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const { url, method, requestBody } = req;
+  const { url, method } = req;
   res.setHeader('Content-Type', 'application/json');
   
   switch (url) {
@@ -25,6 +25,7 @@ export default async function handler(req, res) {
         });
         return;
       } else {
+        const requestBody = req.body;
         // Überprüfe, ob ein Body gesendet wurde und ob er geparst wurde
         if (!requestBody) {
           res.status(400).json({ message: 'Kein Request Body gefunden' });
