@@ -52,7 +52,7 @@ export default async function handler(req, res) {
       } else {
 try {
 const {token, value} = req.body;
-return res.status(200).json({ message: "All good", value: value }, { statusText: "OK" });
+return res.status(200).json({ message: `All good. Your value is: [${value}]` }, { statusText: "OK" });
 } catch (err) {
 return res.status(404).json({ message: 'Error occurred' });
 }
