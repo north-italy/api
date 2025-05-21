@@ -50,6 +50,13 @@ export default async function handler(req, res) {
         });
         return;
       } else {
+try {
+const {token, value} = req.body;
+return res.status(200).json({ message: "All good", value: value }, { statusText: "OK" });
+} catch (err) {
+return res.status(404).json({ message: 'Error occurred' });
+}
+/*
         const requestBody = req.body;
         // Überprüfe, ob ein Body gesendet wurde und ob er geparst wurde
         if (!requestBody) {
@@ -96,6 +103,7 @@ export default async function handler(req, res) {
               reqBody
           });
         }
+*/
         return res.status(202).json({ message }, { statusText: "OK" });
       } 
     default:
